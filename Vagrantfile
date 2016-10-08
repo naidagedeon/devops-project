@@ -68,4 +68,11 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get update
   #   sudo apt-get install -y apache2
   # SHELL
+
+  config.vm.provision "shell", inline: "cd /vagrant/chef-repo; make install-chef-client"
+  config.vm.provision "chef_solo" do |chef|
+	chef.cookbooks_path = ["chef-repo/site-cookbooks", "chef-repo/cookbooks"]
+	chef.add_recipe "factorialapp"
+  end
+
 end
